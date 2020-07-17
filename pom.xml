@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.hzl.cloud</groupId>
+		<artifactId>hadoop-starter-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.hzl.cloud</groupId>
+	<artifactId>mybatis-starter</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>mybatis-starter</name>
+	<description>datasource-plugs</description>
+
+
+	<dependencies>
+		<!--集成mybatis-->
+		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>${mybatis}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/tk.mybatis/mapper-spring-boot-starter -->
+		<!--mybatis工具类，封装类通用查询通过继承com.hzl.hadoop.config.mybatis.BaseMapper就可以执行封装好的增删改查方法-->
+		<dependency>
+			<groupId>tk.mybatis</groupId>
+			<artifactId>mapper-spring-boot-starter</artifactId>
+			<version>${tk.mybatis}</version>
+		</dependency>
+		<!--druid连接池-->
+		<!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>${druid}</version>
+		</dependency>
+		<!--开启aop-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

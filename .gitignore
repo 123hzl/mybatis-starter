@@ -1,0 +1,45 @@
+# maven ignore
+target/
+*.versionsBackup
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+logs/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+*.tar
+
+# system ignore
+.DS_Store
+Thumbs.db
+
+.vscode
+
+# test case code
+**/Demo*.java
+
+#docker
+mysql/mysql_data/
+mysql/mysql_data_slave/

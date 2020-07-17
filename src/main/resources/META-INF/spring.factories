@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.hzl.cloud.config.mybatis.MasterDataSourceConfig,\
+  com.hzl.cloud.config.mybatis.MultiDataSourceConfig,\
+  com.hzl.cloud.config.mybatis.MyBatisConfig,\
+  com.hzl.cloud.config.mybatis.DataSourceAspect
