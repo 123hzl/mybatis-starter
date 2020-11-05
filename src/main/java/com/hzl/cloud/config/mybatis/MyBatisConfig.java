@@ -1,8 +1,14 @@
 package com.hzl.cloud.config.mybatis;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -20,8 +26,10 @@ import javax.sql.DataSource;
  *
  * @author hzl 2020/01/07 11:14 PM
  */
+@Slf4j
 @EnableTransactionManagement
 @Configuration
+@AutoConfigureAfter({MultiDataSourceConfig.class,MasterDataSourceConfig.class})
 public class MyBatisConfig {
 
 	@Resource(name = "dataSource")
@@ -30,11 +38,19 @@ public class MyBatisConfig {
 	@Value("${mybatis.mapperLocations}")
 	private String scanMapperPath;
 
+	@Bean(name="hadoop-mybatis-config")
+	@ConfigurationProperties(prefix = "mybatis.configuration")
+	public org.apache.ibatis.session.Configuration globalConfiguration(){
+		return new org.apache.ibatis.session.Configuration();
+	}
+
+
+
 	@Bean(name = "clusterSqlSessionFactory")
 	@Primary
-	public SqlSessionFactory sqlSessionFactory() throws Exception {
-
+	public SqlSessionFactory sqlSessionFactory(@Qualifier("hadoop-mybatis-config") org.apache.ibatis.session.Configuration configuration) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+		sqlSessionFactoryBean.setConfiguration(configuration);
 		sqlSessionFactoryBean.setDataSource(myRoutingDataSource);
 		sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(scanMapperPath));
 		return sqlSessionFactoryBean.getObject();
