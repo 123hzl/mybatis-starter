@@ -40,9 +40,9 @@ public class  DataSourceAspect {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 
-		//获取参数,不能获取对象集成的父类
+		//获取参数,不能获取对象继承的父类
 		Object[] args = point.getArgs();
-		//获取参数值,不能获取对象集成的父类
+		//获取参数值,不能获取对象继承的父类
 		ParameterNameDiscoverer pnd = new DefaultParameterNameDiscoverer();
 		String[] parameterNames = pnd.getParameterNames(method);
 		//封装参数map
@@ -50,7 +50,7 @@ public class  DataSourceAspect {
 		for (int i = 0; i < parameterNames.length; i++) {
 			paramMap.put(parameterNames[i], args[i]);
 		}
-		log.info("方法参数"+paramMap.toString());
+		log.info("方法参数" + paramMap.toString());
 
 		//获取方法返回值
 		Object returnResult = point.proceed(args);
