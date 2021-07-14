@@ -14,8 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DBContextHolder {
 	private static final ThreadLocal<String> contextHolder = new ThreadLocal<>();
 
-	private static final AtomicInteger counter = new AtomicInteger(-1);
-
 	public static void setDataSource(String dataSource) {
 		log.info("注解设置的数据源"+dataSource);
 		contextHolder.set(dataSource);
@@ -29,18 +27,4 @@ public class DBContextHolder {
 		contextHolder.remove();
 	}
 
-	public static void slave() {
-		//  轮询
-		int index = counter.getAndIncrement() % 2;
-		if (counter.get() > 9999) {
-			counter.set(-1);
-		}
-		if (index == 0) {
-			setDataSource(DBTypeEnum.SLAVE1.value());
-			System.out.println("切换到slave1");
-		}else {
-			setDataSource(DBTypeEnum.SLAVE2.value());
-			System.out.println("切换到slave2");
-		}
-	}
 }

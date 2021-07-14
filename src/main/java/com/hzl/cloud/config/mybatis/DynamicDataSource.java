@@ -19,6 +19,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
 
 	public DynamicDataSource(DataSource defaultTargetDataSource, Map<Object, Object> targetDataSources) {
+		//如果targetDataSources为空，默认用defaultTargetDataSource
 		super.setDefaultTargetDataSource(defaultTargetDataSource);
 		super.setTargetDataSources(targetDataSources);
 		super.afterPropertiesSet();

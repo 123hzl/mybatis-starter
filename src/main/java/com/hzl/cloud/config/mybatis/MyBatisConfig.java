@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -27,7 +28,7 @@ import javax.sql.DataSource;
 @Slf4j
 @EnableTransactionManagement
 @Configuration
-@AutoConfigureAfter({MultiDataSourceConfig.class,MasterDataSourceConfig.class})
+@AutoConfigureAfter({MultiDataSourceConfig.class, MasterDataSourceConfig.class})
 public class MyBatisConfig {
 
 	@Resource(name = "dataSource")
@@ -36,12 +37,11 @@ public class MyBatisConfig {
 	@Value("${mybatis.mapperLocations}")
 	private String scanMapperPath;
 
-	@Bean(name="hadoop-mybatis-config")
+	@Bean(name = "hadoop-mybatis-config")
 	@ConfigurationProperties(prefix = "mybatis.configuration")
-	public org.apache.ibatis.session.Configuration globalConfiguration(){
+	public org.apache.ibatis.session.Configuration globalConfiguration() {
 		return new org.apache.ibatis.session.Configuration();
 	}
-
 
 
 	@Bean(name = "clusterSqlSessionFactory")

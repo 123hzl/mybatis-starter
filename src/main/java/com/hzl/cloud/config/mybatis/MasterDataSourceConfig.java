@@ -25,18 +25,18 @@ import java.util.Map;
 @Slf4j
 @Configuration
 @ConditionalOnProperty(prefix = "hadoop", name = "openMulti", havingValue = "false", matchIfMissing = true)
-@AutoConfigureBefore(DruidDataSourceAutoConfigure.class)
+@AutoConfigureBefore({DruidDataSourceAutoConfigure.class,DataSourceAutoConfiguration.class})
 public class MasterDataSourceConfig {
 
-	@Bean
+	@Bean(name = "masterDataSource")
 	@ConfigurationProperties("spring.datasource.master")
-	@Primary
 	public DataSource masterDataSource() {
 		log.info("注入主数据源");
 		return DruidDataSourceBuilder.create().build();
 	}
 
 	@Bean(name = "dataSource")
+	@Primary
 	public DynamicDataSource dataSource(@Qualifier("masterDataSource") DataSource masterDataSource) {
 		log.info("启动单数据源");
 		Map<Object, Object> targetDataSources = new HashMap<>();

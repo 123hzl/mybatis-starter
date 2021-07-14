@@ -40,23 +40,24 @@ public class  DataSourceAspect {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 
-		//获取参数,不能获取对象继承的父类
-		Object[] args = point.getArgs();
-		//获取参数值,不能获取对象继承的父类
-		ParameterNameDiscoverer pnd = new DefaultParameterNameDiscoverer();
-		String[] parameterNames = pnd.getParameterNames(method);
-		//封装参数map
-		Map<String, Object> paramMap = new HashMap<>(32);
-		for (int i = 0; i < parameterNames.length; i++) {
-			paramMap.put(parameterNames[i], args[i]);
-		}
-		log.info("方法参数" + paramMap.toString());
-
-		//获取方法返回值
-		Object returnResult = point.proceed(args);
-		log.info("打印返回结果" + returnResult.toString());
+//		//获取参数,不能获取对象继承的父类
+//		Object[] args = point.getArgs();
+//		//获取参数值,不能获取对象继承的父类
+//		ParameterNameDiscoverer pnd = new DefaultParameterNameDiscoverer();
+//		String[] parameterNames = pnd.getParameterNames(method);
+//		//封装参数map
+//		Map<String, Object> paramMap = new HashMap<>(32);
+//		for (int i = 0; i < parameterNames.length; i++) {
+//			paramMap.put(parameterNames[i], args[i]);
+//		}
+//		log.info("方法参数" + paramMap.toString());
+//
+//		//获取方法返回值
+//		Object returnResult = point.proceed(args);
+//		log.info("打印返回结果" + returnResult.toString());
 
 		DataSource dataSource = method.getAnnotation(DataSource.class);
+		log.info("多数据源信息"+dataSource.toString());
 		if (dataSource == null) {
 			DBContextHolder.setDataSource(DBTypeEnum.MASTER.value());
 		} else if (DBTypeEnum.MASTER.value().equals(dataSource.name())) {

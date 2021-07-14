@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,25 +25,25 @@ import java.util.Map;
 @Slf4j
 @Configuration
 @ConditionalOnProperty(prefix = "hadoop", name = "openMulti", havingValue = "true", matchIfMissing = false)
-@AutoConfigureBefore(DruidDataSourceAutoConfigure.class)
+@AutoConfigureBefore({DruidDataSourceAutoConfigure.class,DataSourceAutoConfiguration.class})
 public class MultiDataSourceConfig {
 
-	@Bean
+	@Bean(name="masterDataSource")
 	@ConfigurationProperties("spring.datasource.master")
-	@Primary
 	public DataSource masterDataSource() {
 		log.info("注入主数据源");
 		return DruidDataSourceBuilder.create().build();
 	}
 
-	@Bean
+	@Bean(name="slaveDataSource")
 	@ConfigurationProperties("spring.datasource.slave1")
 	public DataSource slaveDataSource() {
 		log.info("注入slave1数据源");
 		return DruidDataSourceBuilder.create().build();
 	}
 
-	@Bean
+	@Bean(name = "dataSource")
+	@Primary
 	public DynamicDataSource dataSource(@Qualifier("masterDataSource") DataSource masterDataSource, @Qualifier("slaveDataSource") DataSource slaveDataSource) {
 		log.info("启动多数据源");
 		Map<Object, Object> targetDataSources = new HashMap<>();

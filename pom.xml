@@ -16,6 +16,12 @@
 	<description>datasource-plugs</description>
 
 
+	<properties>
+		<mybatis>2.2.0</mybatis>
+		<tk.mybatis>2.1.5</tk.mybatis>
+		<druid>1.2.6</druid>
+	</properties>
+
 	<dependencies>
 		<!--集成mybatis-->
 		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
